@@ -52,12 +52,26 @@ h3 { font-family: 'Caveat', cursive; font-size: 2rem; color: #555; margin-bottom
     overflow-x: auto;
 }
 
-/* Kreuzworträtsel Gitter (Finales Meisterwerk-Layout) */
+/* Kreuzworträtsel Gitter (Angepasst für neues JAMES-Layout) */
 #crossword {
     display: grid;
-    grid-template-columns: repeat(24, 25px);
-    grid-template-rows: repeat(23, 25px);
+    /* 27 Spalten und 25 Zeilen für das neue Layout */
+    grid-template-columns: repeat(23, 25px);
+    grid-template-rows: repeat(24, 25px);
     gap: 2px;
+}
+
+/* Anpassung der Polaroids, damit der Text "Frage X" gut reinpasst */
+.polaroid {
+    background: white;
+    padding: 5px 5px 20px 5px; 
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+    cursor: pointer;
+    width: 60px; height: 60px; /* Etwas größer für den Text */
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Caveat', cursive; font-size: 1.4rem; font-weight: bold;
+    color: #555; transition: transform 0.3s;
+    text-align: center;
 }
 
 .cell {
