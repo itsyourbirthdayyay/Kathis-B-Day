@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kathis 30. Geburtstag</title>
+    <title>Monikas 30. Geburtstag</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
-        <h1>Kathrinas B-Day</h1>
+        <h1>Monika Musterfrau</h1>
+        <p class="subtitle">Klicke auf die Fragezeichen, um das Rätsel zu lösen!</p>
         <p class="hinweis">(Tipp: Benutze immer dasselbe Gerät, damit dein Fortschritt gespeichert bleibt)</p>
     </header>
 
-    <div id="crossword"></div>
+    <div class="game-container">
+        <div class="polaroid-column">
+            <h3>Waagerecht &rarr;</h3>
+            <div id="polaroids-h" class="polaroid-wrapper"></div>
+        </div>
 
-    <div id="polaroids" class="polaroid-container"></div>
+        <div id="crossword-container">
+            <div id="crossword"></div>
+        </div>
+
+        <div class="polaroid-column">
+            <h3>Senkrecht &darr;</h3>
+            <div id="polaroids-v" class="polaroid-wrapper"></div>
+        </div>
+    </div>
 
     <div id="question-modal" class="modal">
         <div class="modal-content">
@@ -29,9 +42,12 @@
         </div>
     </div>
 
-    <div id="finale-message" class="hidden">
-        <h2>Glückwunsch!</h2>
-        <p>Du hast alle Rätsel gelöst. Dein Lösungswort leuchtet!</p>
+    <div id="finale-modal" class="modal">
+        <div class="modal-content finale-content">
+            <span id="close-finale" class="close">&times;</span>
+            <h2>Fantastisch!</h2>
+            <img src="finale.webp" alt="Glückwunsch Bild" id="finale-image">
+        </div>
     </div>
 
     <script src="script.js"></script>

@@ -1,71 +1,94 @@
-// Hier ist unser "Lexikon". 
-// x und y sind die exakten Start-Koordinaten aus deiner Zeichnung.
-// dir: 'h' = horizontal (waagerecht), 'v' = vertikal (senkrecht)
+// --- HIER IST DEIN TEST-SCHALTER ---
+// Ändere 'true' zu 'false', wenn Monika das Rätsel bekommen soll!
+const showAnswersForTesting = true; 
+
+// Lexikon (Millimetergenau auf dein letztes digitales Bild abgestimmt)
 const words = [
-    { id: 1, answer: "EISEN", x: 7, y: 3, dir: "h", question: "XXX" },
-    { id: 2, answer: "MEERJUNGFRAU", x: 10, y: 5, dir: "h", question: "XXX" },
-    { id: 3, answer: "HIERARCHIE", x: 3, y: 9, dir: "h", question: "XXX" },
-    { id: 4, answer: "STEIERMARK", x: 14, y: 10, dir: "h", question: "XXX" },
-    { id: 5, answer: "WOMBAT", x: 4, y: 14, dir: "h", question: "XXX" },
-    { id: 6, answer: "NAEHMASCHINE", x: 10, y: 1, dir: "v", question: "XXX" },
-    { id: 7, answer: "WEIHNACHTEN", x: 16, y: 1, dir: "v", question: "XXX" },
-    { id: 8, answer: "PICKNICKKORB", x: 23, y: 7, dir: "v", question: "XXX" },
-    { id: 9, answer: "SEGELBOOT", x: 5, y: 8, dir: "v", question: "XXX" },
-    { id: 10, answer: "ANTONIA", x: 8, y: 14, dir: "v", question: "XXX" }
+    { id: 1, answer: "ANTONIA", x: 5, y: 1, dir: "v", question: "XXX" },
+    { id: 2, answer: "FAMILIE", x: 6, y: 4, dir: "v", question: "XXX" },
+    { id: 3, answer: "FREUNDE", x: 6, y: 4, dir: "h", question: "XXX" },
+    { id: 4, answer: "PUZZLE", x: 14, y: 1, dir: "v", question: "XXX" },
+    { id: 5, answer: "SCHOTTLAND", x: 2, y: 4, dir: "v", question: "XXX" },
+    { id: 6, answer: "TENACIOUSD", x: 4, y: 7, dir: "v", question: "XXX" },
+    { id: 7, answer: "SEYCHELLEN", x: 13, y: 6, dir: "h", question: "XXX" },
+    { id: 8, answer: "HIERARCHIE", x: 17, y: 6, dir: "v", question: "XXX" },
+    { id: 9, answer: "EISEN", x: 21, y: 6, dir: "v", question: "XXX" },
+    { id: 10, answer: "CONTAINEX", x: 1, y: 7, dir: "h", question: "XXX" },
+    { id: 11, answer: "NAEHMASCHINE", x: 8, y: 5, dir: "v", question: "XXX" },
+    { id: 12, answer: "MEERJUNGFRAU", x: 8, y: 9, dir: "h", question: "XXX" },
+    { id: 13, answer: "WOMBAT", x: 9, y: 11, dir: "v", question: "XXX" },
+    { id: 14, answer: "JASONSDANCECREW", x: 6, y: 12, dir: "h", question: "XXX" },
+    { id: 15, answer: "STEIERMARK", x: 14, y: 14, dir: "h", question: "XXX" },
+    { id: 16, answer: "VOLLEYBALL", x: 18, y: 10, dir: "v", question: "XXX" },
+    { id: 17, answer: "SEGELBOOT", x: 13, y: 16, dir: "h", question: "XXX" },
+    { id: 18, answer: "BOULDERN", x: 19, y: 15, dir: "v", question: "XXX" },
+    { id: 19, answer: "WEIHNACHTEN", x: 4, y: 15, dir: "h", question: "XXX" }
 ];
 
-// Später: Trag hier die x und y Koordinaten der Kästchen ein, die zum Lösungswort gehören!
-// Beispiel: {x: 7, y: 3} ist das allererste E von EISEN.
+// Platzhalter für das finale Lösungswort (x, y Koordinaten eintragen)
 const solutionCells = [
-    {x: 7, y: 3}, {x: 10, y: 5}, {x: 3, y: 9} // Das sind im Moment nur Platzhalter!
+    {x: 7, y: 3}, {x: 10, y: 5}, {x: 3, y: 9} 
 ];
 
 let progress = JSON.parse(localStorage.getItem("monikaProgress")) || {};
 let currentWordId = null;
 
 const crosswordDiv = document.getElementById('crossword');
-const polaroidsDiv = document.getElementById('polaroids');
+const polaroidsH = document.getElementById('polaroids-h'); 
+const polaroidsV = document.getElementById('polaroids-v'); 
 const modal = document.getElementById('question-modal');
 const closeModal = document.getElementById('close-modal');
 const submitBtn = document.getElementById('submit-answer');
 const answerInput = document.getElementById('answer-input');
 const errorMsg = document.getElementById('error-message');
 
-// 1. Das Gitter aufbauen
+const finaleModal = document.getElementById('finale-modal');
+const closeFinale = document.getElementById('close-finale');
+
 function buildGrid() {
-    // Wir erzeugen nur Kästchen, wo auch Buchstaben sind
     words.forEach(wordObj => {
         for (let i = 0; i < wordObj.answer.length; i++) {
             let cellX = wordObj.x + (wordObj.dir === "h" ? i : 0);
             let cellY = wordObj.y + (wordObj.dir === "v" ? i : 0);
             let cellId = `cell-${cellX}-${cellY}`;
 
-            // Prüfen ob das Kästchen durch eine Kreuzung schon existiert
             if (!document.getElementById(cellId)) {
                 let cell = document.createElement('div');
                 cell.id = cellId;
                 cell.className = 'cell';
                 cell.style.gridColumn = cellX;
                 cell.style.gridRow = cellY;
+                
+                // Wenn Test-Modus aktiv ist, schreibe die Buchstaben direkt rein
+                if (showAnswersForTesting) {
+                    cell.innerText = wordObj.answer[i];
+                    cell.style.color = "#ccc"; // Leicht ausgegraut zur Unterscheidung
+                }
+                
                 crosswordDiv.appendChild(cell);
             }
         }
     });
 }
 
-// 2. Polaroids aufbauen
 function buildPolaroids() {
-    words.forEach((wordObj, index) => {
+    // Vorher leeren, falls die Funktion mehrfach aufgerufen wird
+    polaroidsH.innerHTML = '';
+    polaroidsV.innerHTML = '';
+
+    words.forEach((wordObj) => {
         let polaroid = document.createElement('div');
         polaroid.className = 'polaroid';
         polaroid.id = `polaroid-${wordObj.id}`;
-        // Polaroid Text: Zeige einfach "1", "2", "3" etc. oder ein Schloss an 
-        polaroid.innerHTML = '?';
-
+        polaroid.innerHTML = '?'; 
         polaroid.addEventListener('click', () => openModal(wordObj));
-        polaroidsDiv.appendChild(polaroid);
+        
+        if (wordObj.dir === "h") {
+            polaroidsH.appendChild(polaroid);
+        } else {
+            polaroidsV.appendChild(polaroid);
+        }
 
-        // Falls schon gelöst (aus dem Local Storage)
         if (progress[wordObj.id]) {
             markAsSolved(wordObj);
         }
@@ -73,10 +96,10 @@ function buildPolaroids() {
     checkWinCondition();
 }
 
-// 3. Modal Steuerung
 function openModal(wordObj) {
     currentWordId = wordObj.id;
-    document.getElementById('modal-title').innerText = `Frage ${words.indexOf(wordObj) + 1}`;
+    let directionText = wordObj.dir === "h" ? "Waagerecht" : "Senkrecht";
+    document.getElementById('modal-title').innerText = `Rätsel (${directionText})`;
     document.getElementById('modal-question').innerText = wordObj.question;
     answerInput.value = '';
     errorMsg.innerText = '';
@@ -85,27 +108,28 @@ function openModal(wordObj) {
 }
 
 closeModal.onclick = () => modal.style.display = 'none';
-window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; }
+closeFinale.onclick = () => finaleModal.style.display = 'none';
 
-// 4. Antwort prüfen
+window.onclick = (e) => { 
+    if (e.target == modal) modal.style.display = 'none'; 
+    if (e.target == finaleModal) finaleModal.style.display = 'none'; 
+}
+
 submitBtn.onclick = () => {
     let userInput = answerInput.value.toUpperCase().trim();
     let currentWordObj = words.find(w => w.id === currentWordId);
 
     if (userInput === currentWordObj.answer) {
-        // Richtig!
         progress[currentWordId] = true;
         localStorage.setItem("monikaProgress", JSON.stringify(progress));
         markAsSolved(currentWordObj);
         modal.style.display = 'none';
         checkWinCondition();
     } else {
-        // Falsch!
         errorMsg.innerText = "Das war leider nicht richtig. Versuch es nochmal!";
     }
 }
 
-// Eingabe auch mit der Enter-Taste ermöglichen
 answerInput.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
@@ -113,39 +137,36 @@ answerInput.addEventListener("keypress", function(event) {
     }
 });
 
-// 5. Visuelles Update wenn gelöst
 function markAsSolved(wordObj) {
-    // Polaroid ausgrauen
     document.getElementById(`polaroid-${wordObj.id}`).classList.add('solved');
-    
-    // Buchstaben in das Gitter eintragen
     for (let i = 0; i < wordObj.answer.length; i++) {
         let cellX = wordObj.x + (wordObj.dir === "h" ? i : 0);
         let cellY = wordObj.y + (wordObj.dir === "v" ? i : 0);
         let cell = document.getElementById(`cell-${cellX}-${cellY}`);
         if (cell) {
             cell.innerText = wordObj.answer[i];
+            cell.style.color = "#000"; // Farbe bei Lösung wieder auf Schwarz setzen
         }
     }
 }
 
-// 6. Das große Finale prüfen
 function checkWinCondition() {
-    let allSolved = words.every(w => progress[w.id]);
+    let allSolved = words.length > 0 && words.every(w => progress[w.id]);
     
     if (allSolved) {
-        document.getElementById('finale-message').classList.remove('hidden');
-        
-        // Die speziellen Lösungs-Kästchen zum Leuchten bringen
         solutionCells.forEach(pos => {
             let cell = document.getElementById(`cell-${pos.x}-${pos.y}`);
             if (cell) {
                 cell.classList.add('solution-glow');
             }
         });
+
+        setTimeout(() => {
+            finaleModal.style.display = 'flex';
+        }, 1500); 
     }
 }
 
-// --- Startschuss ---
+// Startschuss
 buildGrid();
 buildPolaroids();
