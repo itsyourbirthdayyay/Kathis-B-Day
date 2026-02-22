@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kathis 30. Geburtstag</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Kathrinas B-Day</h1>
+        <p class="hinweis">(Tipp: Benutze immer dasselbe Gerät, damit dein Fortschritt gespeichert bleibt)</p>
+    </header>
+
+    <div id="crossword"></div>
+
+    <div id="polaroids" class="polaroid-container"></div>
+
+    <div id="question-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2 id="modal-title">Frage</h2>
+            <p id="modal-question">Hier steht die Frage...</p>
+            <input type="text" id="answer-input" placeholder="Deine Antwort..." autocomplete="off">
+            <p id="error-message" class="error"></p>
+            <button id="submit-answer">Antwort prüfen</button>
+        </div>
+    </div>
+
+    <div id="finale-message" class="hidden">
+        <h2>Glückwunsch!</h2>
+        <p>Du hast alle Rätsel gelöst. Dein Lösungswort leuchtet!</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

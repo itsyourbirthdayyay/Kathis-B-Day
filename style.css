@@ -1,0 +1,211 @@
+:root {
+    --bg-color: #FDF5E6; /* Ein warmes, cremiges Papierweiß */
+    --text-color: #333;
+    --gold: #FFD700;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Typografie */
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4.5rem;
+    margin: 10px 0;
+    color: #2c3e50;
+}
+.subtitle { font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
+.hinweis { font-size: 0.9rem; color: #7f8c8d; font-style: italic; }
+
+/* Kreuzworträtsel Gitter */
+#crossword {
+    display: grid;
+    /* Wir haben im Raster maximal 23 Spalten und 20 Zeilen */
+    grid-template-columns: repeat(24, 30px);
+    grid-template-rows: repeat(21, 30px);
+    gap: 2px;
+    justify-content: center;
+    margin: 40px auto;
+    max-width: 100%;
+    overflow-x: auto; /* Falls der Bildschirm zu schmal ist */
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    background: white;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+}
+
+/* Das Leuchten des finalen Lösungswortes */
+.cell.solution-glow {
+    background-color: var(--gold);
+    border-color: #b8860b;
+    box-shadow: 0 0 15px var(--gold);
+    color: #000;
+    transform: scale(1.1);
+    z-index: 2;
+}
+
+/* Der Container ist jetzt der Bereich für die Wäscheleine */
+.polaroid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Etwas mehr Abstand für die Klammern */
+    margin-top: 80px; /* Mehr Platz nach oben zum Rätsel */
+    position: relative;
+    padding-top: 40px; /* Platz für die Schnur schaffen */
+}
+
+/* Die Wäscheleine (simuliert durch eine Linie im Hintergrund) */
+.polaroid-container::before {
+    content: '';
+    position: absolute;
+    top: 30px; /* Vertikale Position der Schnur */
+    left: 5%; /* Nicht ganz am Rand starten */
+    width: 90%; /* Nicht ganz bis zum Rand gehen */
+    height: 4px;
+    background: #8d6e63; /* Braune Seil-Farbe */
+    border-radius: 4px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    z-index: 0; /* Hinter den Fotos */
+    transform: rotate(-1deg); /* Ganz leichte Neigung sieht natürlicher aus */
+}
+
+.polaroid {
+    background: white;
+    padding: 10px 10px 45px 10px; /* Unten mehr Platz für den dicken Rand */
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+    cursor: pointer;
+    width: 90px; /* Etwas breiter */
+    height: 90px; /* Etwas höher */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+    font-size: 3rem; /* Großes Fragezeichen */
+    font-weight: bold;
+    color: #555;
+    transition: transform 0.3s;
+    position: relative; /* Wichtig für die Klammer-Positionierung */
+    z-index: 1; /* Vor der Schnur */
+    margin-top: 10px; /* Damit sie unter der Schnur hängen */
+}
+
+/* --- Die Wäscheklammer (Simuliert mit CSS) --- */
+
+/* Der Holzkörper der Klammer */
+.polaroid::before {
+    content: '';
+    position: absolute;
+    top: -28px; /* Position oberhalb des Fotos */
+    left: 50%;
+    transform: translateX(-50%); /* Genau mittig zentrieren */
+    width: 16px;
+    height: 40px;
+    background: #d7ccc8; /* Helles Holz */
+    border: 2px solid #a1887f; /* Dunklerer Holzrand */
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Die Metallfeder der Klammer */
+.polaroid::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 6px;
+    background: #95a5a6; /* Metallgrau */
+    border-radius: 2px;
+}
+/* ----------------------------------------- */
+
+/* Wechselnde Drehung für einen lockeren Look */
+.polaroid:nth-child(even) { transform: rotate(4deg) translateY(5px); }
+.polaroid:nth-child(3n) { transform: rotate(-5deg) translateY(-3px); }
+.polaroid:nth-child(5n) { transform: rotate(2deg) translateY(8px); }
+
+.polaroid:hover {
+    /* Beim Hovern wackelt es leicht und wird größer */
+    transform: scale(1.1) rotate(0deg);
+    z-index: 10;
+    box-shadow: 4px 8px 20px rgba(0,0,0,0.25);
+}
+
+.polaroid.solved {
+    opacity: 0.6;
+    pointer-events: none;
+    background: #e0e0e0;
+    color: #a0a0a0;
+    /* Wenn gelöst, verschwindet das Fragezeichen vielleicht? */
+    /* font-size: 0; */ 
+}
+
+/* Modal (Pop-up Fenster) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 24px; font-weight: bold; cursor: pointer;
+}
+
+.modal input {
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.modal button {
+    background: #2c3e50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.modal button:hover { background: #1a252f; }
+.error { color: red; font-size: 0.9rem; min-height: 20px; margin-top: -10px; margin-bottom: 10px;}
+.hidden { display: none; }
+#finale-message { margin-top: 30px; color: #b8860b; }
