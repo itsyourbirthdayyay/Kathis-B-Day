@@ -211,6 +211,21 @@ h3 {
     font-weight: 900;
     text-transform: uppercase;
     transition: all 0.4s ease;
+    position: relative;
+}
+
+/* Question number label in top-left corner of cell */
+.cell-num {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    font-size: 6px;
+    font-weight: 900;
+    color: #9c7bb5;
+    line-height: 1;
+    font-family: 'Nunito', sans-serif;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .cell.solution-glow {

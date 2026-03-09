@@ -1,28 +1,28 @@
 // --- TEST-SCHALTER ---
-const showAnswersForTesting = true;
+const showAnswersForTesting = false;
 
 const words = [
-    { id: 1,  answer: "TENACIOUSD",       x: 7,  y: 1,  dir: "h", question: "XXX" },
-    { id: 2,  answer: "SCHOTTLAND",       x: 15, y: 1,  dir: "v", question: "XXX" },
-    { id: 3,  answer: "JAMES",            x: 8,  y: 3,  dir: "v", question: "XXX" },
-    { id: 4,  answer: "WEIHNACHTEN",      x: 5,  y: 5,  dir: "v", question: "XXX" },
-    { id: 5,  answer: "SEYCHELLEN",       x: 8,  y: 7,  dir: "h", question: "XXX" },
-    { id: 6,  answer: "FAMILIE",          x: 22, y: 7,  dir: "v", question: "XXX" },
-    { id: 7,  answer: "NAEHMASCHINE",     x: 5,  y: 9,  dir: "h", question: "XXX" },
-    { id: 8,  answer: "MEERJUNGFRAU",     x: 9,  y: 9,  dir: "v", question: "XXX" },
-    { id: 9,  answer: "SEGELBOOT",        x: 19, y: 10, dir: "v", question: "XXX" },
-    { id: 10, answer: "FREUNDE",          x: 7,  y: 11, dir: "h", question: "XXX" },
-    { id: 11, answer: "EISEN",            x: 16, y: 11, dir: "h", question: "XXX" },
-    { id: 12, answer: "JASONSDANCECREW",  x: 9,  y: 13, dir: "h", question: "XXX" },
-    { id: 13, answer: "ANTONIA",          x: 16, y: 13, dir: "v", question: "XXX" },
-    { id: 14, answer: "WOMBAT",           x: 23, y: 13, dir: "v", question: "XXX" },
-    { id: 15, answer: "STEIERMARK",       x: 7,  y: 15, dir: "v", question: "XXX" },
-    { id: 16, answer: "VOLLEYBALL",       x: 14, y: 15, dir: "v", question: "XXX" },
-    { id: 17, answer: "PUZZLE",           x: 2,  y: 17, dir: "h", question: "XXX" },
-    { id: 18, answer: "HIERARCHIE",       x: 5,  y: 19, dir: "h", question: "XXX" },
-    { id: 19, answer: "CONTAINEX",        x: 10, y: 22, dir: "h", question: "XXX" },
-    { id: 20, answer: "BOULDERN",         x: 11, y: 24, dir: "h", question: "XXX" },
-    { id: 21, answer: "PEOPLEPLEASER",    x: 2,  y: 11, dir: "v", question: "XXX" },
+    { id: 1,  answer: "TENACIOUSD",       x: 7,  y: 1,  dir: "h", question: "SONG" },
+    { id: 2,  answer: "SCHOTTLAND",       x: 15, y: 1,  dir: "v", question: "Zu welchem Land gehört diese Hymne?\n\nThe hills are bare now,\nAnd autumn leaves lie thick and still,\nO'er land that is lost now,\nWhich those so dearly held.\nThat stood against him,\nProud Edward's Army,\nAnd sent him homeward,\nTo think again." },
+    { id: 3,  answer: "JAMES",            x: 8, y: 3,  dir: "v", question: "Harry Potters Vater" },
+    { id: 4,  answer: "WEIHNACHTEN",      x: 5,  y: 5,  dir: "v", question: "Die schönste Zeit im Jahr" },
+    { id: 5,  answer: "SEYCHELLEN",       x: 8, y: 7,  dir: "h", question: "Inselstaat" },
+    { id: 6,  answer: "FAMILIE",          x: 22, y: 7,  dir: "v", question: "Der engste Kreis" },
+    { id: 7,  answer: "NAEHMASCHINE",     x: 5,  y: 9,  dir: "h", question: "Arbeitsmittel des Schneiders" },
+    { id: 8,  answer: "MEERJUNGFRAU",     x: 9,  y: 9,  dir: "v", question: "Fischweib" },
+    { id: 9,  answer: "SEGELBOOT",        x: 19, y: 10, dir: "v", question: "Ich habe keine Flügel, aber der Wind treibt mich an. Ich habe keinen Motor, aber ich reise übers weite Meer. Mein Kleid ist aus Tuch, mein Weg ist das Wasser. Was bin ich?" },
+    { id: 10, answer: "FREUNDE",          x: 7,  y: 11, dir: "h", question: "Man kann sie nicht im Laden kaufen, aber sie sind unbezahlbar. Sie teilen deinen Kummer, damit er kleiner wird, und sie verdoppeln deine Freude, wenn du lachst. Wer sind sie?" },
+    { id: 11, answer: "EISEN",            x: 16, y: 11, dir: "h", question: "Davon hast du zu wenig im Blut" },
+    { id: 12, answer: "JASONSDANCECREW",  x: 9,  y: 13, dir: "h", question: "Dort hast du tanzen gelernt" },
+    { id: 13, answer: "ANTONIA",          x: 16, y: 13, dir: "v", question: "Wessen Name bedeutet \u201eDie Unbezahlbare\u201c?" },
+    { id: 14, answer: "WOMBAT",           x: 23, y: 13, dir: "v", question: "Würfelkacker" },
+    { id: 15, answer: "STEIERMARK",       x: 7, y: 15, dir: "v", question: "Österreichisches Kronland" },
+    { id: 16, answer: "VOLLEYBALL",       x: 14, y: 15, dir: "v", question: "Mintonette" },
+    { id: 17, answer: "PUZZLE",           x: 2,  y: 17, dir: "h", question: "Erfunden durch John Spilsbury" },
+    { id: 18, answer: "HIERARCHIE",       x: 5,  y: 19, dir: "h", question: "Dagegen kannst du nix machen, ist..." },
+    { id: 19, answer: "CONTAINEX",        x: 10, y: 22, dir: "h", question: "Welches Unternehmen hat 17.950 kg Rückstände aus der Kanalreinigung im Jahr 2024 erzeugt?" },
+    { id: 20, answer: "BOULDERN",         x: 11, y: 24, dir: "h", question: "Ohne Seil klettern" },
+    { id: 21, answer: "PEOPLEPLEASER",    x: 2,  y: 11,  dir: "v", question: "Dieses Nomen verwendest du, um dein Verhalten anderen gegenüber zu beschreiben." },
 ];
 
 const solutionCells = [
@@ -44,6 +44,7 @@ const finaleModal = document.getElementById('finale-modal');
 const closeFinale = document.getElementById('close-finale');
 
 function buildGrid() {
+    // First pass: create all cells
     words.forEach(wordObj => {
         for (let i = 0; i < wordObj.answer.length; i++) {
             let cellX = wordObj.x + (wordObj.dir === "h" ? i : 0);
@@ -62,6 +63,22 @@ function buildGrid() {
                 crosswordDiv.appendChild(cell);
             } else if (showAnswersForTesting) {
                 document.getElementById(cellId).innerText = wordObj.answer[i];
+            }
+        }
+    });
+
+    // Second pass: number labels on first cell of each word
+    words.forEach(wordObj => {
+        let firstCell = document.getElementById(`cell-${wordObj.x}-${wordObj.y}`);
+        if (firstCell) {
+            let existing = firstCell.querySelector('.cell-num');
+            if (!existing) {
+                let label = document.createElement('span');
+                label.className = 'cell-num';
+                label.innerText = wordObj.id;
+                firstCell.appendChild(label);
+            } else {
+                existing.innerText += '\u00B7' + wordObj.id;
             }
         }
     });
@@ -96,14 +113,50 @@ function openModal(wordObj) {
     currentWordId = wordObj.id;
     let directionText = wordObj.dir === "h" ? "Waagerecht →" : "Senkrecht ↓";
     document.getElementById('modal-title').innerText = `Frage ${wordObj.id} (${directionText})`;
-    document.getElementById('modal-question').innerText = wordObj.question;
+
+    const questionEl = document.getElementById('modal-question');
+
+    if (wordObj.question === 'SONG') {
+        if (isPlaying) toggleMusic();
+        questionEl.innerHTML = `
+            <span style="display:block;margin-bottom:10px;">🎵 Hör dir diesen Song an – welches Wort steckt darin?</span>
+            <audio id="question-song" src="dd.mp3" preload="auto"></audio>
+            <button id="song-play-btn" onclick="toggleSongBtn()" style="
+                background:linear-gradient(135deg,#ff6b9d,#a78bfa);
+                color:white;border:none;border-radius:30px;
+                padding:10px 24px;font-size:1rem;font-family:'Boogaloo',cursive;
+                cursor:pointer;box-shadow:0 4px 14px rgba(255,107,157,0.4);
+                margin-top:4px;
+            ">▶ Abspielen</button>
+        `;
+    } else {
+        questionEl.innerHTML = wordObj.question.replace(/\n/g, '<br>');
+    }
+
     answerInput.value = '';
     errorMsg.innerText = '';
     modal.style.display = 'flex';
     answerInput.focus();
 }
 
-closeModal.onclick = () => modal.style.display = 'none';
+function toggleSongBtn() {
+    const audio = document.getElementById('question-song');
+    const btn   = document.getElementById('song-play-btn');
+    if (!audio) return;
+    if (audio.paused) {
+        audio.play();
+        btn.textContent = '⏸ Pause';
+    } else {
+        audio.pause();
+        btn.textContent = '▶ Abspielen';
+    }
+}
+
+closeModal.onclick = () => {
+    const song = document.getElementById('question-song');
+    if (song) { song.pause(); song.currentTime = 0; }
+    modal.style.display = 'none';
+};
 closeFinale.onclick = () => finaleModal.style.display = 'none';
 window.onclick = (e) => {
     if (e.target == modal) modal.style.display = 'none';
@@ -134,7 +187,13 @@ function markAsSolved(wordObj) {
         let cellX = wordObj.x + (wordObj.dir === "h" ? i : 0);
         let cellY = wordObj.y + (wordObj.dir === "v" ? i : 0);
         let cell = document.getElementById(`cell-${cellX}-${cellY}`);
-        if (cell) { cell.innerText = wordObj.answer[i]; cell.style.color = "#000"; }
+        if (cell) {
+            // Preserve the number label, only update the text node
+            const numLabel = cell.querySelector('.cell-num');
+            cell.textContent = wordObj.answer[i];
+            cell.style.color = "#000";
+            if (numLabel) cell.appendChild(numLabel);
+        }
     }
 }
 
