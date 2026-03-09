@@ -3,21 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kathis Geburtstag</title>
+    <title>Lady Kathi – Geburtstags-Rätsel</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <div class="bg-deco"></div>
+
     <header>
-        <h1>Lady Kathi</h1>
-        <p class="subtitle">Klicke auf die Fragezeichen, um das Rätsel zu lösen!</p>
-        <p class="hinweis">(Tipp: Benutze immer dasselbe Gerät, damit dein Fortschritt gespeichert bleibt)</p>
+        <div class="balloon-title">
+            <span class="balloon-letter" style="--c:#ff6b9d;--r:-8deg">L</span>
+            <span class="balloon-letter" style="--c:#ffd700;--r:5deg">A</span>
+            <span class="balloon-letter" style="--c:#a78bfa;--r:-4deg">D</span>
+            <span class="balloon-letter" style="--c:#34d399;--r:7deg">Y</span>
+            <span class="balloon-space"> </span>
+            <span class="balloon-letter" style="--c:#f97316;--r:-6deg">K</span>
+            <span class="balloon-letter" style="--c:#60a5fa;--r:4deg">A</span>
+            <span class="balloon-letter" style="--c:#ff6b9d;--r:-5deg">T</span>
+            <span class="balloon-letter" style="--c:#ffd700;--r:8deg">H</span>
+            <span class="balloon-letter" style="--c:#a78bfa;--r:-3deg">I</span>
+        </div>
+        <p class="subtitle">🎉 Klicke auf die Icons, um das Rätsel zu lösen! 🎉</p>
+        <p class="hinweis">🎈 Tipp: Benutze immer dasselbe Gerät, damit dein Fortschritt gespeichert bleibt 🎈</p>
     </header>
 
     <div class="game-container">
         <div class="polaroid-column">
-            <h3>Waagerecht &rarr;</h3>
+            <h3>Waagerecht →</h3>
             <div id="polaroids-h" class="polaroid-wrapper"></div>
         </div>
 
@@ -26,11 +39,12 @@
         </div>
 
         <div class="polaroid-column">
-            <h3>Senkrecht &darr;</h3>
+            <h3>Senkrecht ↓</h3>
             <div id="polaroids-v" class="polaroid-wrapper"></div>
         </div>
     </div>
 
+    <!-- Frage-Modal -->
     <div id="question-modal" class="modal">
         <div class="modal-content">
             <span id="close-modal" class="close">&times;</span>
@@ -38,17 +52,28 @@
             <p id="modal-question">Hier steht die Frage...</p>
             <input type="text" id="answer-input" placeholder="Deine Antwort..." autocomplete="off">
             <p id="error-message" class="error"></p>
-            <button id="submit-answer">Antwort prüfen</button>
+            <button id="submit-answer">Antwort prüfen ✨</button>
         </div>
     </div>
 
+    <!-- Finale Modal -->
     <div id="finale-modal" class="modal">
         <div class="modal-content finale-content">
             <span id="close-finale" class="close">&times;</span>
-            <h2>Fantastisch!</h2>
-            <img src="finale.webp" alt="Glückwunsch Bild" id="finale-image">
+            <h2>🎉 Fantastisch! 🎉</h2>
+            <img src="finale.webp" alt="Glückwunsch!" id="finale-image">
         </div>
     </div>
+
+    <!-- 🦆 Musik-Ente -->
+    <div id="duck-player">
+        <div id="duck-bubble">drück mich</div>
+        <div id="duck" onclick="toggleMusic()">
+            <img id="duck-img" src="duck_idle.gif" alt="Ente">
+        </div>
+    </div>
+
+    <audio id="music" src="playlist.mp3" loop></audio>
 
     <script src="script.js"></script>
 </body>
