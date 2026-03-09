@@ -1,80 +1,270 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lady Kathi – Geburtstags-Rätsel</title>
-    <link rel="stylesheet" href="style.css?v=3">
-    <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lady Kathi - Geburtstags-Raetsel</title>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff9f0;--pink:#ff6b9d;--yellow:#ffd700;--purple:#a78bfa;--green:#34d399;--blue:#60a5fa;--orange:#f97316;--dark:#2d1b4e;--gold:#FFD700}
+*{box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background-color:var(--bg);background-image:radial-gradient(circle at 15% 20%,rgba(255,107,157,.08) 0%,transparent 40%),radial-gradient(circle at 85% 70%,rgba(167,139,250,.08) 0%,transparent 40%);color:var(--dark);text-align:center;margin:0;padding:20px;min-height:100vh;overflow-x:hidden}
+.bg-deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-balloon{position:absolute;bottom:-60px;animation:floatUp linear infinite;user-select:none}
+@keyframes floatUp{0%{transform:translateY(0) rotate(-5deg);opacity:0}10%{opacity:1}90%{opacity:.8}100%{transform:translateY(-110vh) rotate(5deg);opacity:0}}
+.confetti-piece{position:fixed;top:-20px;animation:confettiFall linear forwards;z-index:999;pointer-events:none}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+header{position:relative;z-index:1;margin-bottom:10px}
+.balloon-title{display:flex;justify-content:center;align-items:flex-end;gap:4px;flex-wrap:wrap;margin:20px 0 10px}
+.balloon-letter{font-family:'Boogaloo',cursive;font-size:clamp(2.5rem,7vw,5rem);color:white;background:var(--c);width:clamp(50px,9vw,80px);height:clamp(55px,10vw,88px);display:inline-flex;align-items:center;justify-content:center;border-radius:50% 50% 45% 45%/55% 55% 45% 45%;transform:rotate(var(--r));box-shadow:inset -4px -6px 0 rgba(0,0,0,.12),inset 3px 4px 0 rgba(255,255,255,.3),0 6px 20px rgba(0,0,0,.15);position:relative;text-shadow:1px 2px 3px rgba(0,0,0,.2);transition:transform .2s;cursor:default}
+.balloon-letter::before{content:'';position:absolute;top:18%;left:20%;width:25%;height:18%;background:rgba(255,255,255,.4);border-radius:50%;transform:rotate(-30deg)}
+.balloon-letter::after{content:'';position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:1.5px;height:14px;background:rgba(0,0,0,.25)}
+.balloon-letter:hover{transform:rotate(var(--r)) translateY(-6px) scale(1.08)}
+.balloon-space{width:16px}
+.subtitle{font-size:1.1rem;font-weight:700;color:var(--dark);margin:12px 0 4px}
+.hinweis{font-size:.85rem;color:#9c7bb5;font-style:italic;margin-bottom:24px}
+h3{font-family:'Boogaloo',cursive;font-size:1.6rem;color:var(--purple);margin-bottom:12px;letter-spacing:1px}
+.game-container{display:flex;justify-content:center;align-items:flex-start;gap:24px;max-width:1500px;margin:0 auto;flex-wrap:wrap;position:relative;z-index:1}
+.polaroid-column{display:flex;flex-direction:column;align-items:center;width:210px}
+.polaroid-wrapper{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+#crossword-container{flex-grow:1;display:flex;justify-content:center;overflow-x:auto}
+#crossword{display:grid;grid-template-columns:repeat(24,26px);grid-template-rows:repeat(27,26px);gap:2px}
+.cell{width:26px;height:26px;background:white;border:2px solid #c4b5d4;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;transition:all .4s;position:relative}
+.cell-num{position:absolute;top:1px;left:2px;font-size:6px;font-weight:900;color:#9c7bb5;line-height:1;pointer-events:none;z-index:2}
+.cell.solution-glow{background:var(--gold);border-color:#b8860b;box-shadow:0 0 12px var(--gold);color:#000;transform:scale(1.12);z-index:2}
+.polaroid{background:white;padding:8px 8px 22px;box-shadow:3px 5px 12px rgba(0,0,0,.12);cursor:pointer;width:68px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:2px;transition:transform .25s,box-shadow .25s;position:relative}
+.polaroid::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:2px 2px 0 0}
+.polaroid:nth-child(6n+1)::before{background:var(--pink)}.polaroid:nth-child(6n+2)::before{background:var(--yellow)}.polaroid:nth-child(6n+3)::before{background:var(--purple)}.polaroid:nth-child(6n+4)::before{background:var(--green)}.polaroid:nth-child(6n+5)::before{background:var(--blue)}.polaroid:nth-child(6n+6)::before{background:var(--orange)}
+.polaroid-icon{font-size:1.8rem;line-height:1}
+.polaroid-num{font-family:'Boogaloo',cursive;font-size:.85rem;color:#888;line-height:1}
+.polaroid:nth-child(even){transform:rotate(3deg)}.polaroid:nth-child(3n){transform:rotate(-4deg)}.polaroid:nth-child(5n){transform:rotate(5deg)}
+.polaroid:hover{transform:scale(1.18) rotate(0deg) !important;z-index:10;box-shadow:5px 10px 25px rgba(0,0,0,.2)}
+.polaroid.solved{opacity:.45;pointer-events:none;background:#f0eded;filter:grayscale(.6)}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(45,27,78,.75);z-index:100;justify-content:center;align-items:center;backdrop-filter:blur(3px)}
+.modal-content{background:white;padding:32px;border-radius:16px;width:90%;max-width:420px;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.3);border-top:6px solid var(--pink)}
+.modal-content h2{font-family:'Boogaloo',cursive;font-size:1.8rem;color:var(--dark);margin:0 0 12px}
+.close{position:absolute;top:12px;right:16px;font-size:22px;font-weight:bold;cursor:pointer;color:#aaa}
+.close:hover{color:var(--pink)}
+.modal input{width:85%;padding:12px;margin:16px 0 8px;font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;text-transform:uppercase;text-align:center;border:2px solid #e2d9f3;border-radius:8px;outline:none}
+.modal input:focus{border-color:var(--purple)}
+.modal button{background:linear-gradient(135deg,var(--pink),var(--purple));color:white;border:none;padding:12px 28px;font-size:16px;font-family:'Boogaloo',cursive;cursor:pointer;border-radius:30px;box-shadow:0 4px 14px rgba(255,107,157,.4)}
+.error{color:var(--pink);font-size:.9rem;min-height:20px;margin:4px 0 8px;font-weight:700}
+.finale-content{background:linear-gradient(135deg,#fff9f0,#fef0ff);border-top:6px solid var(--gold);text-align:center;max-width:520px}
+.finale-content h2{font-family:'Boogaloo',cursive;font-size:2.5rem;color:var(--dark)}
+#finale-image{max-width:100%;height:auto;background:white;padding:10px 10px 30px;border-radius:2px;box-shadow:0 6px 20px rgba(0,0,0,.2);transform:rotate(-2deg)}
+#duck-player{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;align-items:center;gap:6px;user-select:none}
+#duck-bubble{background:white;border:2px solid #c4b5d4;border-radius:12px 12px 12px 2px;padding:5px 10px;font-family:'Boogaloo',cursive;font-size:.85rem;color:var(--dark);white-space:nowrap;box-shadow:2px 3px 8px rgba(0,0,0,.12);animation:bubbleBob 2.5s ease-in-out infinite}
+@keyframes bubbleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+#duck{cursor:pointer;transition:transform .15s;filter:drop-shadow(2px 4px 6px rgba(0,0,0,.2))}
+#duck:hover{transform:scale(1.1)}#duck:active{transform:scale(.92)}
+#duck-img{display:block;width:100px;height:auto}
+#duck.dancing{animation:duckDance .5s steps(1) infinite}
+@keyframes duckDance{0%{transform:rotate(-12deg) translateY(0)}25%{transform:rotate(0deg) translateY(-4px)}50%{transform:rotate(12deg) translateY(0)}75%{transform:rotate(0deg) translateY(-4px)}}
+#modal-question{white-space:pre-wrap;line-height:1.7;font-size:.95rem}
+</style>
 </head>
 <body>
+<div class="bg-deco"></div>
+<header>
+  <div class="balloon-title">
+    <span class="balloon-letter" style="--c:#ff6b9d;--r:-8deg">L</span>
+    <span class="balloon-letter" style="--c:#ffd700;--r:5deg">A</span>
+    <span class="balloon-letter" style="--c:#a78bfa;--r:-4deg">D</span>
+    <span class="balloon-letter" style="--c:#34d399;--r:7deg">Y</span>
+    <span class="balloon-space"> </span>
+    <span class="balloon-letter" style="--c:#f97316;--r:-6deg">K</span>
+    <span class="balloon-letter" style="--c:#60a5fa;--r:4deg">A</span>
+    <span class="balloon-letter" style="--c:#ff6b9d;--r:-5deg">T</span>
+    <span class="balloon-letter" style="--c:#ffd700;--r:8deg">H</span>
+    <span class="balloon-letter" style="--c:#a78bfa;--r:-3deg">I</span>
+  </div>
+  <p class="subtitle">&#127881; Klicke auf die Icons, um das R&auml;tsel zu l&ouml;sen! &#127881;</p>
+  <p class="hinweis">&#127880; Tipp: Benutze immer dasselbe Ger&auml;t, damit dein Fortschritt gespeichert bleibt &#127880;</p>
+</header>
+<div class="game-container">
+  <div class="polaroid-column">
+    <h3>Waagerecht &rarr;</h3>
+    <div id="polaroids-h" class="polaroid-wrapper"></div>
+  </div>
+  <div id="crossword-container"><div id="crossword"></div></div>
+  <div class="polaroid-column">
+    <h3>Senkrecht &darr;</h3>
+    <div id="polaroids-v" class="polaroid-wrapper"></div>
+  </div>
+</div>
+<div id="question-modal" class="modal">
+  <div class="modal-content">
+    <span id="close-modal" class="close">&times;</span>
+    <h2 id="modal-title">Frage</h2>
+    <p id="modal-question"></p>
+    <input type="text" id="answer-input" placeholder="Deine Antwort..." autocomplete="off">
+    <p id="error-message" class="error"></p>
+    <button id="submit-answer">Antwort pr&uuml;fen &#10024;</button>
+  </div>
+</div>
+<div id="finale-modal" class="modal">
+  <div class="modal-content finale-content">
+    <span id="close-finale" class="close">&times;</span>
+    <h2>&#127881; Fantastisch! &#127881;</h2>
+    <img src="finale.webp" alt="Glueckwunsch!" id="finale-image">
+  </div>
+</div>
+<div id="duck-player">
+  <div id="duck-bubble">dr&#252;ck mich</div>
+  <div id="duck" onclick="toggleMusic()">
+    <img id="duck-img" src="duck_idle.gif" alt="Ente">
+  </div>
+</div>
+<audio id="music" src="playlist.mp3" loop></audio>
+<script>
+var words=[
+{id:1,answer:"TENACIOUSD",x:8,y:1,dir:"h",question:"SONG"},
+{id:2,answer:"SCHOTTLAND",x:16,y:1,dir:"v",question:"Zu welchem Land geh\u00f6rt diese Hymne?\n\nThe hills are bare now,\nAnd autumn leaves lie thick and still,\nO'er land that is lost now,\nWhich those so dearly held.\nThat stood against him,\nProud Edward's Army,\nAnd sent him homeward,\nTo think again."},
+{id:3,answer:"JAMES",x:10,y:3,dir:"v",question:"Harry Potters Vater"},
+{id:4,answer:"WEIHNACHTEN",x:5,y:5,dir:"v",question:"Die sch\u00f6nste Zeit im Jahr"},
+{id:5,answer:"SEYCHELLEN",x:10,y:7,dir:"h",question:"Inselstaat"},
+{id:6,answer:"FAMILIE",x:22,y:7,dir:"v",question:"Der engste Kreis"},
+{id:7,answer:"NAEHMASCHINE",x:5,y:9,dir:"h",question:"Arbeitsmittel des Schneiders"},
+{id:8,answer:"MEERJUNGFRAU",x:9,y:9,dir:"v",question:"Fischweib"},
+{id:9,answer:"SEGELBOOT",x:18,y:10,dir:"v",question:"Ich habe keine Fl\u00fcgel, aber der Wind treibt mich an. Ich habe keinen Motor, aber ich reise \u00fcbers weite Meer. Mein Kleid ist aus Tuch, mein Weg ist das Wasser. Was bin ich?"},
+{id:10,answer:"FREUNDE",x:6,y:11,dir:"h",question:"Man kann sie nicht im Laden kaufen, aber sie sind unbezahlbar. Sie teilen deinen Kummer, damit er kleiner wird, und sie verdoppeln deine Freude, wenn du lachst. Wer sind sie?"},
+{id:11,answer:"EISEN",x:15,y:11,dir:"h",question:"Davon hast du zu wenig im Blut"},
+{id:12,answer:"JASONSDANCECREW",x:9,y:13,dir:"h",question:"Dort hast du tanzen gelernt"},
+{id:13,answer:"ANTONIA",x:14,y:13,dir:"v",question:"Wessen Name bedeutet die Unbezahlbare?"},
+{id:14,answer:"WOMBAT",x:23,y:13,dir:"v",question:"W\u00fcrfelkacker"},
+{id:15,answer:"STEIERMARK",x:11,y:15,dir:"v",question:"\u00d6sterreichisches Kronland"},
+{id:16,answer:"VOLLEYBALL",x:13,y:15,dir:"v",question:"Mintonette"},
+{id:17,answer:"PUZZLE",x:2,y:17,dir:"h",question:"Erfunden durch John Spilsbury"},
+{id:18,answer:"HIERARCHIE",x:5,y:19,dir:"h",question:"Dagegen kannst du nix machen, ist..."},
+{id:19,answer:"CONTAINEX",x:11,y:22,dir:"h",question:"Welches Unternehmen hat 17.950 kg R\u00fcckst\u00e4nde aus der Kanalreinigung im Jahr 2024 erzeugt?"},
+{id:20,answer:"BOULDERN",x:11,y:24,dir:"h",question:"Ohne Seil klettern"},
+{id:21,answer:"PEOPLEPLEASER",x:4,y:6,dir:"v",question:"Dieses Nomen verwendest du, um dein Verhalten anderen gegen\u00fcber zu beschreiben."}
+];
+var solutionCells=[{x:7,y:3},{x:10,y:5},{x:3,y:9}];
+var progress={};try{progress=JSON.parse(localStorage.getItem("kathiProgress")||"{}");}catch(e){}
+var currentWordId=null,isPlaying=false;
 
-    <div class="bg-deco"></div>
+function buildGrid(){
+  var cw=document.getElementById("crossword");
+  words.forEach(function(w){
+    for(var i=0;i<w.answer.length;i++){
+      var cx=w.x+(w.dir==="h"?i:0),cy=w.y+(w.dir==="v"?i:0),id="cell-"+cx+"-"+cy;
+      if(!document.getElementById(id)){
+        var c=document.createElement("div");c.id=id;c.className="cell";c.style.gridColumn=cx;c.style.gridRow=cy;cw.appendChild(c);
+      }
+    }
+  });
+  words.forEach(function(w){
+    var f=document.getElementById("cell-"+w.x+"-"+w.y);if(!f)return;
+    var l=f.querySelector(".cell-num");
+    if(!l){l=document.createElement("span");l.className="cell-num";l.textContent=w.id;f.appendChild(l);}
+    else{l.textContent+="\u00b7"+w.id;}
+  });
+}
 
-    <header>
-        <div class="balloon-title">
-            <span class="balloon-letter" style="--c:#ff6b9d;--r:-8deg">L</span>
-            <span class="balloon-letter" style="--c:#ffd700;--r:5deg">A</span>
-            <span class="balloon-letter" style="--c:#a78bfa;--r:-4deg">D</span>
-            <span class="balloon-letter" style="--c:#34d399;--r:7deg">Y</span>
-            <span class="balloon-space"> </span>
-            <span class="balloon-letter" style="--c:#f97316;--r:-6deg">K</span>
-            <span class="balloon-letter" style="--c:#60a5fa;--r:4deg">A</span>
-            <span class="balloon-letter" style="--c:#ff6b9d;--r:-5deg">T</span>
-            <span class="balloon-letter" style="--c:#ffd700;--r:8deg">H</span>
-            <span class="balloon-letter" style="--c:#a78bfa;--r:-3deg">I</span>
-        </div>
-        <p class="subtitle">🎉 Klicke auf die Icons, um das Rätsel zu lösen! 🎉</p>
-        <p class="hinweis">🎈 Tipp: Benutze immer dasselbe Gerät, damit dein Fortschritt gespeichert bleibt 🎈</p>
-    </header>
+var icons=["&#127880;","&#127881;","&#127874;","&#129346;","&#127873;","&#10024;","&#129193;","&#127882;","&#127870;","&#127926;","&#127775;","&#127872;","&#129395;","&#127908;","&#129669;","&#127928;","&#128131;","&#127919;","&#127904;","&#127752;","&#129639;"];
 
-    <div class="game-container">
-        <div class="polaroid-column">
-            <h3>Waagerecht →</h3>
-            <div id="polaroids-h" class="polaroid-wrapper"></div>
-        </div>
+function buildPolaroids(){
+  var pH=document.getElementById("polaroids-h"),pV=document.getElementById("polaroids-v");
+  var sorted=words.slice().sort(function(a,b){return a.id-b.id;});
+  sorted.forEach(function(w){
+    var p=document.createElement("div");p.className="polaroid";p.id="polaroid-"+w.id;
+    p.innerHTML="<span class='polaroid-icon'>"+icons[(w.id-1)%icons.length]+"</span><span class='polaroid-num'>"+w.id+"</span>";
+    p.addEventListener("click",(function(ww){return function(){openModal(ww);};})(w));
+    (w.dir==="h"?pH:pV).appendChild(p);
+    if(progress[w.id])markAsSolved(w);
+  });
+  checkWin();
+}
 
-        <div id="crossword-container">
-            <div id="crossword"></div>
-        </div>
+function openModal(w){
+  currentWordId=w.id;
+  document.getElementById("modal-title").textContent="Frage "+w.id+" ("+(w.dir==="h"?"Waagerecht \u2192":"Senkrecht \u2193")+")";
+  var qEl=document.getElementById("modal-question");
+  if(w.question==="SONG"){
+    if(isPlaying)toggleMusic();
+    qEl.innerHTML="<span style='display:block;margin-bottom:10px'>&#127925; H\u00f6r dir diesen Song an \u2013 welches Wort steckt darin?</span><audio id='qsong' src='dd.mp3' preload='auto'></audio><button onclick='toggleSongBtn()' id='song-btn' style='background:linear-gradient(135deg,#ff6b9d,#a78bfa);color:white;border:none;border-radius:30px;padding:10px 24px;font-size:1rem;font-family:Boogaloo,cursive;cursor:pointer;margin-top:8px'>&#9654; Abspielen</button>";
+  }else{
+    qEl.textContent=w.question;
+  }
+  document.getElementById("answer-input").value="";
+  document.getElementById("error-message").textContent="";
+  document.getElementById("question-modal").style.display="flex";
+  document.getElementById("answer-input").focus();
+}
 
-        <div class="polaroid-column">
-            <h3>Senkrecht ↓</h3>
-            <div id="polaroids-v" class="polaroid-wrapper"></div>
-        </div>
-    </div>
+function toggleSongBtn(){
+  var a=document.getElementById("qsong"),b=document.getElementById("song-btn");if(!a)return;
+  if(a.paused){a.play();b.textContent="&#9208; Pause";}else{a.pause();b.textContent="&#9654; Abspielen";}
+}
 
-    <!-- Frage-Modal -->
-    <div id="question-modal" class="modal">
-        <div class="modal-content">
-            <span id="close-modal" class="close">&times;</span>
-            <h2 id="modal-title">Frage</h2>
-            <p id="modal-question">Hier steht die Frage...</p>
-            <input type="text" id="answer-input" placeholder="Deine Antwort..." autocomplete="off">
-            <p id="error-message" class="error"></p>
-            <button id="submit-answer">Antwort prüfen ✨</button>
-        </div>
-    </div>
+document.getElementById("close-modal").onclick=function(){
+  var s=document.getElementById("qsong");if(s){s.pause();s.currentTime=0;}
+  document.getElementById("question-modal").style.display="none";
+};
+document.getElementById("close-finale").onclick=function(){document.getElementById("finale-modal").style.display="none";};
+window.addEventListener("click",function(e){
+  var qm=document.getElementById("question-modal"),fm=document.getElementById("finale-modal");
+  if(e.target===qm)qm.style.display="none";if(e.target===fm)fm.style.display="none";
+});
+document.getElementById("submit-answer").onclick=checkAnswer;
+document.getElementById("answer-input").addEventListener("keypress",function(e){if(e.key==="Enter")checkAnswer();});
 
-    <!-- Finale Modal -->
-    <div id="finale-modal" class="modal">
-        <div class="modal-content finale-content">
-            <span id="close-finale" class="close">&times;</span>
-            <h2>🎉 Fantastisch! 🎉</h2>
-            <img src="finale.webp" alt="Glückwunsch!" id="finale-image">
-        </div>
-    </div>
+function checkAnswer(){
+  var input=document.getElementById("answer-input").value.toUpperCase().trim();
+  var w=words.filter(function(x){return x.id===currentWordId;})[0];
+  if(input===w.answer){
+    progress[currentWordId]=true;
+    try{localStorage.setItem("kathiProgress",JSON.stringify(progress));}catch(e){}
+    markAsSolved(w);document.getElementById("question-modal").style.display="none";launchConfetti();checkWin();
+  }else{
+    document.getElementById("error-message").textContent="Das war leider nicht richtig. Versuch es nochmal! &#127880;";
+  }
+}
 
-    <!-- 🦆 Musik-Ente -->
-    <div id="duck-player">
-        <div id="duck-bubble">drück mich</div>
-        <div id="duck" onclick="toggleMusic()">
-            <img id="duck-img" src="duck_idle.gif" alt="Ente">
-        </div>
-    </div>
+function markAsSolved(w){
+  var p=document.getElementById("polaroid-"+w.id);if(p)p.classList.add("solved");
+  for(var i=0;i<w.answer.length;i++){
+    var cx=w.x+(w.dir==="h"?i:0),cy=w.y+(w.dir==="v"?i:0);
+    var c=document.getElementById("cell-"+cx+"-"+cy);
+    if(c){c.textContent=w.answer[i];c.style.color="#000";}
+  }
+}
 
-    <audio id="music" src="playlist.mp3" loop></audio>
+function checkWin(){
+  if(words.every(function(w){return progress[w.id];})){
+    solutionCells.forEach(function(p){var c=document.getElementById("cell-"+p.x+"-"+p.y);if(c)c.classList.add("solution-glow");});
+    setTimeout(function(){document.getElementById("finale-modal").style.display="flex";},1500);
+  }
+}
 
-    <script src="script.js?v=3"></script>
+function launchConfetti(){
+  var colors=["#ff6b9d","#ffd700","#a78bfa","#34d399","#60a5fa","#f97316"];
+  for(var i=0;i<60;i++){
+    var el=document.createElement("div");el.className="confetti-piece";
+    el.style.cssText="left:"+(Math.random()*100)+"vw;background:"+colors[Math.floor(Math.random()*colors.length)]+";animation-delay:"+(Math.random()*2)+"s;animation-duration:"+(2+Math.random()*2)+"s;width:"+(6+Math.random()*8)+"px;height:"+(6+Math.random()*8)+"px;border-radius:"+(Math.random()>.5?"50%":"2px")+";";
+    document.body.appendChild(el);
+    setTimeout((function(e){return function(){e.remove();};})(el),4000);
+  }
+}
+
+function createBalloons(){
+  var e=["&#127880;","&#127880;","&#127881;","&#10024;"],bg=document.querySelector(".bg-deco");
+  for(var i=0;i<8;i++){
+    var b=document.createElement("div");b.className="bg-balloon";b.innerHTML=e[Math.floor(Math.random()*e.length)];
+    b.style.cssText="left:"+(5+Math.random()*90)+"%;animation-delay:"+(Math.random()*8)+"s;animation-duration:"+(10+Math.random()*8)+"s;font-size:"+(1.5+Math.random()*2)+"rem;opacity:"+(0.15+Math.random()*0.2)+";";
+    bg.appendChild(b);
+  }
+}
+
+buildGrid();buildPolaroids();createBalloons();
+
+var duckEl=document.getElementById("duck"),duckImg=document.getElementById("duck-img"),bubble=document.getElementById("duck-bubble"),music=document.getElementById("music");
+function toggleMusic(){
+  isPlaying=!isPlaying;
+  if(isPlaying){music.play();duckEl.classList.add("dancing");duckImg.src="duck_dance.gif";bubble.textContent="&#127925; yeah!";}
+  else{music.pause();duckEl.classList.remove("dancing");duckImg.src="duck_idle.gif";bubble.innerHTML="dr&#252;ck mich";}
+}
+</script>
 </body>
 </html>
