@@ -119,7 +119,7 @@ function openModal(wordObj) {
     if (wordObj.question === 'SONG') {
         if (isPlaying) toggleMusic();
         questionEl.innerHTML = `
-            <span style="display:block;margin-bottom:10px;">🎵 Hör dir diesen Song an – welches Wort steckt darin?</span>
+            <span style="display:block;margin-bottom:10px;">Welche Band spielt diesen Song?</span>
             <audio id="question-song" src="dd.mp3" preload="auto"></audio>
             <button id="song-play-btn" onclick="toggleSongBtn()" style="
                 background:linear-gradient(135deg,#ff6b9d,#a78bfa);
@@ -267,7 +267,7 @@ function toggleMusic() {
         music.play();
         duckEl.classList.add('dancing');
         duckImg.src = 'duck_dance.gif';
-        bubble.textContent = '🎵 yeah!';
+        bubble.textContent = '\uD83C\uDFB5 yeah!';
     } else {
         music.pause();
         duckEl.classList.remove('dancing');
