@@ -63,9 +63,313 @@ body::after{bottom:-80px;right:-80px;background:radial-gradient(circle,rgba(167,
 #duck-img{display:block;width:100px;height:auto;}
 #duck.dancing{animation:duckDance .5s steps(1) infinite;}
 @keyframes duckDance{0%{transform:rotate(-12deg) translateY(0);}25%{transform:rotate(0) translateY(-4px);}50%{transform:rotate(12deg) translateY(0);}75%{transform:rotate(0) translateY(-4px);}100%{transform:rotate(-12deg) translateY(0);}}
-    </style>
+    
+/* INTRO STYLES */
+
+/* ══════════════════════════════════════
+   INTRO ANIMATION OVERLAY
+══════════════════════════════════════ */
+#intro-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: #1a0a2e;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+}
+/* Stars background */
+#intro-overlay::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 30%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 80% 50%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60% 75%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 70%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 95% 40%, rgba(255,255,255,0.8) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Moon */
+#intro-moon {
+    position: absolute; top: 40px; right: 80px;
+    width: 60px; height: 60px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(255,215,0,0.4);
+    opacity: 0;
+    animation: moonAppear 1s ease forwards 0.3s;
+}
+@keyframes moonAppear { to { opacity: 1; } }
+
+/* Owl flight path */
+#intro-owl {
+    position: absolute;
+    font-size: 64px;
+    top: 30%;
+    left: -120px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    animation: owlFly 2.8s cubic-bezier(0.4,0,0.2,1) forwards 0.8s;
+    transform: scaleX(-1);
+}
+@keyframes owlFly {
+    0%   { left: -120px; top: 30%; transform: scaleX(-1) rotate(5deg); }
+    40%  { left: 50%;    top: 22%; transform: scaleX(-1) translateX(-50%) rotate(-3deg); }
+    70%  { left: 50%;    top: 22%; transform: scaleX(-1) translateX(-50%) rotate(0deg); }
+    85%  { left: 50%;    top: 26%; transform: scaleX(-1) translateX(-50%) rotate(-5deg) scale(0.9); }
+    100% { left: 50%;    top: 26%; transform: scaleX(-1) translateX(-50%) rotate(0deg) scale(1); opacity: 0; }
+}
+/* Wing flap animation on the emoji inside */
+#owl-body {
+    display: inline-block;
+    animation: owlWings 0.22s steps(1) infinite;
+    transform-origin: center bottom;
+}
+@keyframes owlWings {
+    0%   { transform: scaleY(1)    scaleX(1); }
+    25%  { transform: scaleY(0.82) scaleX(1.12); }
+    50%  { transform: scaleY(0.65) scaleX(1.22); }
+    75%  { transform: scaleY(0.82) scaleX(1.12); }
+    100% { transform: scaleY(1)    scaleX(1); }
+}
+
+/* Envelope container */
+#intro-envelope-wrap {
+    position: relative;
+    margin-top: 30px;
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+    animation: envelopeAppear 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards 3.4s;
+}
+@keyframes envelopeAppear {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Envelope SVG wrapper */
+#intro-envelope {
+    width: 300px;
+    position: relative;
+    cursor: default;
+}
+
+/* Envelope lid open animation */
+#env-lid {
+    transform-origin: top center;
+    animation: openLid 0.8s cubic-bezier(0.4,0,0.2,1) forwards 4.5s;
+}
+@keyframes openLid {
+    0%   { transform: rotateX(0deg); }
+    100% { transform: rotateX(-175deg); }
+}
+
+/* Letter rises out of envelope */
+#intro-letter {
+    position: absolute;
+    left: 50%; top: 0;
+    transform: translateX(-50%) translateY(0);
+    width: 260px;
+    background: #fffef8;
+    border-radius: 4px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    text-align: left;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #2d1b4e;
+    opacity: 0;
+    z-index: 10;
+    animation: letterRise 1s cubic-bezier(0.34,1.2,0.64,1) forwards 5.2s;
+    max-height: 420px;
+    overflow-y: auto;
+}
+@keyframes letterRise {
+    0%   { opacity: 0; transform: translateX(-50%) translateY(60px); }
+    30%  { opacity: 1; }
+    100% { opacity: 1; transform: translateX(-50%) translateY(-320px); }
+}
+
+#intro-letter h4 {
+    font-family: 'Boogaloo', cursive;
+    font-size: 1rem;
+    color: #a78bfa;
+    margin: 0 0 10px;
+    border-bottom: 1px solid #e2d9f3;
+    padding-bottom: 6px;
+}
+#intro-letter p {
+    margin: 0 0 8px;
+    font-size: 0.73rem;
+}
+#intro-letter .letter-sign {
+    margin-top: 14px;
+    font-style: italic;
+    color: #9c7bb5;
+    font-size: 0.72rem;
+}
+
+/* Wax seal */
+#intro-seal {
+    position: absolute;
+    bottom: 58px; left: 50%;
+    transform: translateX(-50%);
+    width: 44px; height: 44px;
+    background: radial-gradient(circle at 35% 35%, #ff8fb5, #ff6b9d, #cc3366);
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    animation: sealAppear 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards 4.2s;
+    opacity: 0;
+    z-index: 5;
+}
+@keyframes sealAppear {
+    0%   { opacity:0; transform: translateX(-50%) scale(0); }
+    100% { opacity:1; transform: translateX(-50%) scale(1); }
+}
+
+/* Continue button */
+#intro-continue {
+    margin-top: 24px;
+    padding: 14px 36px;
+    background: linear-gradient(135deg, #ff6b9d, #a78bfa);
+    color: white; border: none; border-radius: 30px;
+    font-family: 'Boogaloo', cursive; font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,107,157,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: btnAppear 0.6s ease forwards 6.8s;
+}
+@keyframes btnAppear {
+    to { opacity: 1; transform: translateY(0); }
+}
+#intro-continue:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 28px rgba(255,107,157,0.6);
+}
+
+/* Fade out overlay */
+#intro-overlay.fade-out {
+    animation: overlayFade 0.8s ease forwards;
+}
+@keyframes overlayFade {
+    to { opacity: 0; pointer-events: none; }
+}
+
+/* Floating dust particles */
+.intro-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleDrift linear infinite;
+    opacity: 0.4;
+}
+@keyframes particleDrift {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.4; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+</style>
 </head>
 <body>
+
+<!-- ══ INTRO ANIMATION ══ -->
+<div id="intro-overlay">
+    <div id="intro-moon"></div>
+
+    <!-- Floating particles -->
+    <div class="intro-particle" style="left:8%;bottom:0;width:4px;height:4px;background:#ffd700;animation-duration:8s;animation-delay:0s;"></div>
+    <div class="intro-particle" style="left:20%;bottom:0;width:3px;height:3px;background:#ff6b9d;animation-duration:11s;animation-delay:1s;"></div>
+    <div class="intro-particle" style="left:40%;bottom:0;width:5px;height:5px;background:#a78bfa;animation-duration:9s;animation-delay:2s;"></div>
+    <div class="intro-particle" style="left:65%;bottom:0;width:3px;height:3px;background:#34d399;animation-duration:12s;animation-delay:0.5s;"></div>
+    <div class="intro-particle" style="left:80%;bottom:0;width:4px;height:4px;background:#ffd700;animation-duration:7s;animation-delay:1.5s;"></div>
+    <div class="intro-particle" style="left:90%;bottom:0;width:3px;height:3px;background:#ff6b9d;animation-duration:10s;animation-delay:3s;"></div>
+
+    <!-- Owl -->
+    <div id="intro-owl">
+    <div id="owl-body">🦉</div>
+</div>
+
+    <!-- Envelope + letter -->
+    <div id="intro-envelope-wrap">
+
+        <!-- Letter (slides up out of envelope) -->
+        <div id="intro-letter">
+            <h4>✨ Liebe Kathrina,</h4>
+            <p>30 Jahre – das klingt nach einer Zahl, aber in Wirklichkeit ist es eine ganze Welt. Eine Welt voller Momente, Lachen, Abenteuer und all der kleinen Dinge, die dich zu dem Menschen gemacht haben, der du heute bist.</p>
+            <p>Du trägst das Grün der Steiermark im Herzen – jene sanfte, tiefe Wärme der steirischen Hügel, die einen nie wirklich loslässt. Und gleichzeitig hat dich das raue, stolze Schottland längst in seinen Bann gezogen, mit seinen weiten Mooren, den alten Burgen und dem Wind, der Geschichten erzählt, die älter sind als die Zeit selbst.</p>
+            <p>Vielleicht liegt es daran, dass beide Orte etwas gemeinsam haben: eine Seele. Eine Tiefe, die man nicht beschreiben, nur fühlen kann. Und genau diese Tiefe spürt man auch in dir.</p>
+            <p>Mit 30 Jahren hast du das Beste noch vor dir. Mögen deine nächsten Jahrzehnte so bunt sein wie ein steirischer Herbst und so unvergesslich wie der erste Blick auf die schottischen Highlands. Möge jeder neue Tag dir etwas bringen, das dein Herz ein kleines bisschen mehr zum Leuchten bringt.</p>
+            <p>Alles erdenklich Gute zum Geburtstag, Kathrina – du verdienst jeden einzelnen Sonnenstrahl davon.</p>
+            <p>Hab enorm viel Spaß beim Lösen!</p>
+            <div class="letter-sign">In Herzlichkeit, Damian 💜</div>
+        </div>
+
+        <!-- Envelope SVG -->
+        <div id="intro-envelope">
+            <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style="width:300px;filter:drop-shadow(0 8px 30px rgba(0,0,0,0.5));">
+                <!-- Envelope body -->
+                <rect x="0" y="30" width="300" height="170" rx="8" fill="#ffffff"/>
+                <rect x="0" y="30" width="300" height="170" rx="8" fill="none" stroke="#e2d9f3" stroke-width="2"/>
+                <!-- Bottom fold lines -->
+                <line x1="0" y1="200" x2="150" y2="110" stroke="#e2d9f3" stroke-width="1.5"/>
+                <line x1="300" y1="200" x2="150" y2="110" stroke="#e2d9f3" stroke-width="1.5"/>
+                <!-- Lid (animated) -->
+                <g id="env-lid" style="perspective:800px;">
+                    <path d="M 0 30 L 150 115 L 300 30 Z" fill="#e8e0f8" stroke="#c4b5d4" stroke-width="1.5"/>
+                </g>
+            </svg>
+            <!-- Wax seal -->
+            <div id="intro-seal">
+    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <!-- Outer circle -->
+        <circle cx="22" cy="22" r="21" fill="url(#sealGrad)" stroke="#8b1a1a" stroke-width="1.5"/>
+        <!-- Inner circle border -->
+        <circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+        <!-- Cross dividing 4 houses -->
+        <line x1="22" y1="5" x2="22" y2="39" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+        <line x1="5" y1="22" x2="39" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+        <!-- Gryffindor (top-left): Lion simplified -->
+        <text x="11" y="18" text-anchor="middle" font-size="9" fill="white" opacity="0.9">🦁</text>
+        <!-- Slytherin (top-right): Snake -->
+        <text x="33" y="18" text-anchor="middle" font-size="9" fill="white" opacity="0.9">🐍</text>
+        <!-- Hufflepuff (bottom-left): Badger -->
+        <text x="11" y="34" text-anchor="middle" font-size="9" fill="white" opacity="0.9">🦡</text>
+        <!-- Ravenclaw (bottom-right): Eagle -->
+        <text x="33" y="34" text-anchor="middle" font-size="9" fill="white" opacity="0.9">🦅</text>
+        <!-- Center H -->
+        <text x="22" y="26" text-anchor="middle" font-family="serif" font-size="8" font-weight="bold" fill="white" opacity="0.95">H</text>
+        <!-- Gradient def -->
+        <defs>
+            <radialGradient id="sealGrad" cx="35%" cy="30%">
+                <stop offset="0%" stop-color="#c0392b"/>
+                <stop offset="60%" stop-color="#8b1a1a"/>
+                <stop offset="100%" stop-color="#5a0e0e"/>
+            </radialGradient>
+        </defs>
+    </svg>
+</div>
+        </div>
+
+        <!-- Continue button -->
+        <button id="intro-continue" onclick="dismissIntro()">Zum Rätsel &nbsp;🎉</button>
+    </div>
+</div>
+<!-- ══ END INTRO ══ -->
+
 <div class="bg-deco"></div>
 <header>
     <div class="balloon-title">
@@ -107,6 +411,7 @@ body::after{bottom:-80px;right:-80px;background:radial-gradient(circle,rgba(167,
 </div>
 <audio id="music" src="playlist.mp3"></audio><audio id="music2" src="playlist2.mp3"></audio>
 <script>
+
 var showAnswersForTesting=false;
 var words=[
     {id:1, answer:"TENACIOUSD",      x:7, y:1, dir:"h", question:"SONG"},
@@ -260,6 +565,14 @@ function toggleMusic(){
     isPlaying=!isPlaying;
     if(isPlaying){music.play();duckEl.classList.add("dancing");duckImg.src="duck_dance.gif";bubble.textContent="🎵 yeah!";}
     else{stopAll();duckEl.classList.remove("dancing");duckImg.src="duck_idle.gif";bubble.textContent="drück mich";}
+}
+
+function dismissIntro() {
+    var overlay = document.getElementById('intro-overlay');
+    overlay.classList.add('fade-out');
+    setTimeout(function() {
+        overlay.style.display = 'none';
+    }, 800);
 }
 </script>
 </body>
