@@ -111,7 +111,7 @@ function buildPolaroids() {
 }
 
 function getPartyIcon(id) {
-    var icons = ['🎈','🎉','🎂','🥂','🎁','✨','🪩','🎊','🍾','🎶','🌟','🎀','🥳','🎤','🪅','🎸','💃','🎯','🎠','🌈','🫧'];
+    var icons = ['🎈','🎉','🎂','🥂','🎁','✨','🪩','🎊','🍾','🎶','🌟','🎀','🥳','🎤','🪅','🎸','💃','🎯','🎠','🌈','🌊'];
     return icons[(id - 1) % icons.length];
 }
 
@@ -133,7 +133,7 @@ function openModal(wordObj) {
                 'color:white;border:none;border-radius:30px;' +
                 'padding:10px 24px;font-size:1rem;font-family:Boogaloo,cursive;' +
                 'cursor:pointer;box-shadow:0 4px 14px rgba(255,107,157,0.4);' +
-            '">\u25b6 Abspielen</button>';
+            '">▶ Abspielen</button>';
     } else {
         questionEl.innerHTML = wordObj.question.replace(/\n/g, '<br>');
     }
@@ -156,10 +156,10 @@ function toggleSongBtn() {
     if (!audio || !btn) return;
     if (audio.paused) {
         audio.play();
-        btn.textContent = '\u23f8 Pause';
+        btn.textContent = '⏸ Pause';
     } else {
         audio.pause();
-        btn.textContent = '\u25b6 Abspielen';
+        btn.textContent = '▶ Abspielen';
     }
 }
 
@@ -184,7 +184,7 @@ submitBtn.onclick = function() {
         launchConfetti();
         checkWinCondition();
     } else {
-        errorMsg.textContent = "Das war leider nicht richtig. Versuch es nochmal! \uD83C\uDF88";
+        errorMsg.textContent = "Das war leider nicht richtig. Versuch es nochmal! 🎈";
     }
 };
 
@@ -243,7 +243,7 @@ function launchConfetti() {
 
 // ── Background balloons ───────────────────────────────────────────────────────
 function createBalloons() {
-    var emojis = ['\uD83C\uDF88','\uD83C\uDF88','\uD83C\uDF89','\u2728'];
+    var emojis = ['🎈','🎈','🎉','✨'];
     for (var i = 0; i < 8; i++) {
         var b = document.createElement('div');
         b.className   = 'bg-balloon';
@@ -270,11 +270,11 @@ function toggleMusic() {
         music.play();
         duckEl.classList.add('dancing');
         duckImg.src       = 'duck_dance.gif';
-        bubble.textContent = '\uD83C\uDFB5 yeah!';
+        bubble.textContent = '🎵 yeah!';
     } else {
         music.pause();
         duckEl.classList.remove('dancing');
         duckImg.src       = 'duck_idle.gif';
-        bubble.textContent = 'dr\u00fcck mich';
+        bubble.textContent = 'drück mich';
     }
 }
